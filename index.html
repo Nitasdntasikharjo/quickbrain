@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080d27">
+<title>QUICK BRAIN – Tantangan Otak Kilat</title>
+<style>
+:root{--bg:#080d27;--panel:#101a3e;--cyan:#31eaff;--pink:#ff4fd8;--yellow:#ffe66d;--green:#52ff9b;--red:#ff5d78;--white:#f4f7ff}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -10%,#263b79 0,#101638 38%,#070b20 78%);color:var(--white);font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.14;background-image:linear-gradient(#8ca5ff22 1px,transparent 1px),linear-gradient(90deg,#8ca5ff22 1px,transparent 1px);background-size:34px 34px;mask-image:linear-gradient(to bottom,black,transparent)}
+button,input{font:inherit}
+button{cursor:pointer}
+.wrap{width:min(1100px,94vw);margin:auto;padding:20px 0 36px;position:relative}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px}
+.brand{font-weight:1000;letter-spacing:2px;font-size:clamp(1.15rem,3vw,1.8rem);text-shadow:0 0 18px #31eaff88}
+.brand span{color:var(--cyan)}
+.tag{border:1px solid #31eaff66;color:#a9f7ff;padding:7px 12px;border-radius:99px;font-size:.78rem;letter-spacing:1px;background:#10244c99}
+.panel{background:linear-gradient(145deg,#15234eeF,#0d1535f2);border:1px solid #5a75d866;border-radius:24px;box-shadow:0 18px 55px #0008,inset 0 0 30px #3c5cb51a;padding:clamp(18px,3vw,30px)}
+.screen{display:none}.screen.active{display:block;animation:appear .4s ease}
+@keyframes appear{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+h1,h2,h3,p{margin-top:0}
+.hero{text-align:center;padding:clamp(24px,6vw,65px) 15px}
+.hero h1{font-size:clamp(2.3rem,7vw,5rem);line-height:1;margin-bottom:12px;font-weight:1000;letter-spacing:-2px}
+.hero h1 b{color:var(--cyan);text-shadow:0 0 25px #31eaff88}
+.subtitle{color:#b8c8f7;font-size:clamp(1rem,2.4vw,1.2rem);margin-bottom:26px}
+.subject{display:inline-flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:0 auto 26px}
+.subject span{background:#172b59;border:1px solid #5979c8;border-radius:12px;padding:9px 14px;color:#d9e5ff;font-size:.9rem}
+.namebox{width:min(420px,100%);margin:auto;text-align:left}
+label{display:block;color:#b8c8f7;font-size:.9rem;margin:0 0 8px}
+input{width:100%;padding:15px 16px;border-radius:13px;border:1px solid #5b77c9;background:#08122f;color:white;outline:none}
+input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #31eaff22}
+.primary{border:0;border-radius:14px;padding:14px 24px;color:#07132d;font-weight:900;background:linear-gradient(100deg,var(--cyan),#83ffdc);box-shadow:0 7px 25px #31eaff33;transition:.2s}
+.primary:hover{transform:translateY(-2px);filter:brightness(1.08)}
+.startbtn{width:100%;margin-top:14px;font-size:1.05rem}
+.hint{color:#9eb0df;font-size:.84rem;line-height:1.5;margin:16px auto 0;max-width:600px}
+.topline{display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:center;margin-bottom:16px}
+.stat{background:#09132f;border:1px solid #435b9d;border-radius:13px;padding:9px 13px;min-width:92px}
+.stat small{display:block;color:#91a6df;font-size:.7rem;text-transform:uppercase;letter-spacing:1px}
+.stat strong{font-size:1.15rem}
+.levelrow{display:flex;justify-content:space-between;align-items:center;color:#b8c8f7;font-size:.85rem;margin-bottom:8px}
+.progress{height:9px;border-radius:20px;background:#07102b;overflow:hidden;border:1px solid #334b88;margin-bottom:20px}
+.progress>div{height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--pink));box-shadow:0 0 14px var(--cyan);transition:width .35s}
+.questionbox{text-align:center;padding:clamp(18px,4vw,34px);border-radius:20px;background:linear-gradient(135deg,#132451,#10183a);border:1px solid #536cb7;min-height:170px;display:flex;flex-direction:column;justify-content:center}
+.qmeta{font-size:.76rem;color:var(--yellow);letter-spacing:2px;font-weight:800;margin-bottom:12px}
+.question{font-size:clamp(1.2rem,3.5vw,2rem);line-height:1.35;font-weight:850;margin:0}
+.answers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:17px}
+.answer{position:relative;min-height:86px;text-align:left;border:1px solid #536bb4;border-radius:17px;background:linear-gradient(145deg,#182b5b,#111b40);color:#f5f7ff;padding:17px 18px;display:flex;align-items:center;gap:13px;font-size:clamp(.95rem,2vw,1.1rem);font-weight:750;transition:transform .15s,border-color .15s,box-shadow .15s;touch-action:manipulation}
+.answer:hover,.answer.hovered{transform:translateY(-3px);border-color:var(--cyan);box-shadow:0 0 0 2px #31eaff55,0 0 25px #31eaff22}
+.letter{flex:0 0 39px;height:39px;display:grid;place-items:center;border-radius:11px;background:#263d78;color:var(--cyan);font-weight:1000;font-size:1.1rem}
+.answer.correct{border-color:var(--green);background:#123b3a;box-shadow:0 0 25px #52ff9b44}
+.answer.wrong{border-color:var(--red);background:#421d3a;box-shadow:0 0 25px #ff5d7844}
+.controls{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:17px;flex-wrap:wrap}
+.gesture{font-size:.83rem;color:#a9b9e8}
+.camera{display:flex;align-items:center;gap:9px;font-size:.82rem;color:#b8c8f7}
+.camera button{border:1px solid #526ab0;background:#14234c;color:#eaf2ff;border-radius:10px;padding:8px 12px}
+.dot{width:8px;height:8px;border-radius:50%;background:#7180a8;display:inline-block}
+.dot.on{background:var(--green);box-shadow:0 0 10px var(--green)}
+.camwrap{position:fixed;right:16px;bottom:16px;width:150px;aspect-ratio:4/3;border:1px solid #31eaff88;border-radius:14px;overflow:hidden;background:#050a1d;z-index:5;box-shadow:0 8px 30px #0009;display:none}
+.camwrap.show{display:block}
+.camwrap video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}
+.camlabel{position:absolute;bottom:0;left:0;right:0;background:#07112ddd;padding:4px;text-align:center;font-size:.66rem;color:#bffaff}
+.feedback{margin-top:16px;padding:15px 18px;border-radius:14px;background:#0a1533;border:1px solid #5b72b7;display:none;line-height:1.5}
+.feedback.show{display:block;animation:appear .25s}
+.feedback.good{border-color:var(--green)}.feedback.bad{border-color:var(--red)}
+.feedback strong{display:block;margin-bottom:4px}
+.result{text-align:center;padding:35px 15px}
+.result .score{font-size:clamp(3rem,10vw,6rem);font-weight:1000;color:var(--yellow);text-shadow:0 0 25px #ffe66d55}
+.result h2{font-size:clamp(1.8rem,5vw,3rem)}
+.result p{color:#c4d0f3;line-height:1.6}
+.resultstats{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:20px 0}
+.resultstats span{background:#0a1533;border:1px solid #5068aa;border-radius:12px;padding:12px 17px}
+.footer{text-align:center;color:#6f82b8;font-size:.75rem;margin-top:20px}
+@media(max-width:650px){.topline{grid-template-columns:1fr 1fr}.topline .stat:first-child{grid-column:1/-1}.answers{gap:9px}.answer{min-height:96px;padding:12px 10px;gap:8px}.letter{flex-basis:32px;height:32px}.camwrap{width:112px;right:8px;bottom:8px}.controls{padding-right:120px}}
+@media(max-width:420px){.answers{grid-template-columns:1fr}.answer{min-height:65px}.camwrap{width:95px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><div class="brand">⚡ QUICK <span>BRAIN</span></div><div class="tag">TANTANGAN OTAK KILAT</div></header>
+
+<section id="home" class="screen active panel hero">
+  <div style="font-size:3rem;margin-bottom:12px">🧠⚡</div>
+  <h1>QUICK <b>BRAIN</b></h1>
+  <p class="subtitle">Tantangan Otak Kilat · Siap jadi jagoan IPAS?</p>
+  <div class="subject"><span>🔬 IPAS</span><span>👁️ Materi: MATA</span><span>🎒 Kelas 5</span><span>🏆 5 Level</span></div>
+  <div class="namebox">
+    <label for="studentName">NAMA SISWA</label>
+    <input id="studentName" maxlength="28" placeholder="Ketik namamu di sini..." autocomplete="given-name">
+    <button id="startBtn" class="primary startbtn">MULAI TANTANGAN ➜</button>
+  </div>
+  <p class="hint">Jawab 15 pertanyaan dalam 5 level. Arahkan telapak tangan ke kotak jawaban lalu lakukan gerakan pinch (satukan ibu jari dan telunjuk) untuk memilih. Kamu juga bisa menggunakan mouse atau layar sentuh.</p>
+</section>
+
+<section id="game" class="screen panel">
+  <div class="topline">
+    <div class="stat"><small>Pemain</small><strong id="playerLabel">Siswa</strong></div>
+    <div class="stat"><small>Skor</small><strong id="score">0</strong></div>
+    <div class="stat"><small>Waktu</small><strong id="timer">20</strong><small>detik</small></div>
+  </div>
+  <div class="levelrow"><strong id="levelLabel">LEVEL 1 / 5</strong><span id="questionCount">SOAL 1 / 15</span></div>
+  <div class="progress"><div id="progressFill"></div></div>
+  <div class="questionbox">
+    <div class="qmeta" id="qmeta">LEVEL 1 · LOTS</div>
+    <p class="question" id="questionText">Pertanyaan akan muncul di sini.</p>
+  </div>
+  <div class="answers" id="answers"></div>
+  <div id="feedback" class="feedback" aria-live="polite"></div>
+  <div class="controls">
+    <div class="gesture">☝️ Arahkan tangan · 🤏 Pinch untuk mengunci</div>
+    <div class="camera"><span id="camDot" class="dot"></span><span id="camStatus">Kamera nonaktif</span><button id="cameraBtn">Aktifkan kamera</button></div>
+  </div>
+</section>
+
+<section id="finish" class="screen panel result">
+  <div style="font-size:3.5rem">🏆✨</div>
+  <h2 id="resultTitle">Hebat!</h2>
+  <p id="resultMessage"></p>
+  <div class="score" id="finalScore">0</div>
+  <div class="resultstats"><span>✅ Benar: <b id="correctCount">0</b>/15</span><span>⏱️ Waktu: <b id="timeUsed">0</b> detik</span></div>
+  <button id="againBtn" class="primary">↻ MAIN KEMBALI</button>
+</section>
+<div class="footer">QUICK BRAIN · BELAJAR IPAS JADI SERU · KELAS 5</div>
+</div>
+<div class="camwrap" id="camWrap"><video id="inputVideo" playsinline></video><div class="camlabel">GESTURE TRACKING</div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+<script>
+const quiz = [
+ {level:1,kind:"LOTS",q:"Bagian mata yang berfungsi mengatur banyak sedikitnya cahaya yang masuk adalah ....",a:["Pupil","Retina","Saraf mata","Lensa"],c:0,e:"Pupil adalah lubang di tengah iris yang menjadi jalan masuk cahaya ke dalam mata."},
+ {level:1,kind:"MOTS",q:"Saat berada di tempat yang sangat terang, bagian berwarna pada mata membantu ....",a:["Memperbesar pupil","Mengecilkan pupil","Menutup retina","Mengubah warna mata"],c:1,e:"Iris mengatur ukuran pupil. Dalam cahaya terang, pupil mengecil agar cahaya yang masuk tidak berlebihan."},
+ {level:1,kind:"HOTS",q:"Rani berpindah dari ruangan gelap ke halaman yang sangat terang. Mengapa ia perlu waktu sebentar agar merasa nyaman melihat?",a:["Mata sedang menyesuaikan jumlah cahaya","Retina berhenti bekerja","Lensa berubah menjadi gelap","Pupil tidak dapat bergerak"],c:0,e:"Mata membutuhkan waktu untuk menyesuaikan ukuran pupil terhadap perubahan cahaya."},
+ {level:2,kind:"LOTS",q:"Bagian mata yang menangkap bayangan benda adalah ....",a:["Alis","Retina","Kelopak mata","Iris"],c:1,e:"Retina berada di bagian belakang bola mata dan menangkap cahaya/bayangan yang masuk."},
+ {level:2,kind:"MOTS",q:"Mengapa kita dapat melihat benda di sekitar kita?",a:["Benda mengeluarkan suara","Cahaya dari benda masuk ke mata","Mata menghasilkan cahaya sendiri","Telinga mengirim gambar"],c:1,e:"Kita melihat ketika cahaya dari benda masuk ke mata dan diterima oleh retina."},
+ {level:2,kind:"HOTS",q:"Dito membaca buku dengan lampu yang terlalu redup. Tindakan terbaik agar membaca lebih nyaman adalah ....",a:["Mendekatkan buku sangat dekat ke mata","Menambah penerangan ruangan","Membaca sambil berlari","Menutup satu mata terus-menerus"],c:1,e:"Penerangan yang cukup membantu mata melihat tulisan dengan nyaman. Jarak membaca juga perlu dijaga."},
+ {level:3,kind:"LOTS",q:"Bagian bening di depan mata yang membantu membiaskan cahaya disebut ....",a:["Kornea","Iris","Retina","Saraf optik"],c:0,e:"Kornea adalah lapisan bening di bagian depan mata yang membantu membelokkan cahaya."},
+ {level:3,kind:"MOTS",q:"Apa tugas saraf optik?",a:["Menggerakkan kelopak mata","Membawa informasi penglihatan ke otak","Menghasilkan air mata","Mengatur warna iris"],c:1,e:"Saraf optik meneruskan informasi dari retina menuju otak agar kita dapat memahami apa yang dilihat."},
+ {level:3,kind:"HOTS",q:"Ketika membaca, Siska memegang buku terlalu dekat dengan wajahnya. Kebiasaan yang lebih baik adalah ....",a:["Menjaga jarak baca yang nyaman dan cukup terang","Mematikan lampu","Membaca sambil tiduran dalam gelap","Menatap tulisan tanpa berkedip"],c:0,e:"Jarak baca yang wajar, pencahayaan cukup, dan jeda istirahat membantu menjaga kenyamanan mata."},
+ {level:4,kind:"LOTS",q:"Cairan yang membantu menjaga kelembapan permukaan mata disebut ....",a:["Air liur","Air mata","Keringat","Darah"],c:1,e:"Air mata membasahi dan membantu membersihkan permukaan mata."},
+ {level:4,kind:"MOTS",q:"Mengapa kita dianjurkan tidak mengucek mata dengan tangan kotor?",a:["Agar mata berubah warna","Kuman dapat masuk dan menyebabkan iritasi atau infeksi","Agar pupil membesar","Supaya bisa melihat dalam gelap"],c:1,e:"Tangan kotor dapat membawa kuman. Hindari mengucek mata dan cuci tangan secara teratur."},
+ {level:4,kind:"HOTS",q:"Mata Edo terasa lelah setelah lama melihat layar. Kebiasaan yang paling tepat adalah ....",a:["Terus melihat layar tanpa jeda","Mengistirahatkan mata dan melihat benda jauh sesekali","Menaikkan kecerahan setinggi mungkin","Melihat layar di ruangan gelap"],c:1,e:"Istirahat berkala, berkedip, dan sesekali melihat jauh dapat membantu mengurangi kelelahan mata."},
+ {level:5,kind:"LOTS",q:"Kebiasaan yang baik untuk menjaga kesehatan mata adalah ....",a:["Membaca di tempat cukup terang","Menatap matahari langsung","Mengucek mata dengan tangan kotor","Memakai gawai sepanjang hari"],c:0,e:"Membaca dengan pencahayaan cukup merupakan salah satu kebiasaan baik untuk mata."},
+ {level:5,kind:"MOTS",q:"Mengapa makanan bergizi seperti wortel, sayuran hijau, dan telur baik untuk kesehatan mata?",a:["Mengandung zat gizi yang dibutuhkan tubuh","Membuat mata dapat melihat menembus tembok","Mengubah bentuk pupil","Menggantikan fungsi retina"],c:0,e:"Makanan bergizi menyediakan vitamin dan zat gizi yang mendukung kesehatan mata dan tubuh."},
+ {level:5,kind:"HOTS",q:"Temanmu sering meminjam kacamata orang lain karena merasa penglihatannya kurang jelas. Saran terbaik adalah ....",a:["Memakai kacamata siapa saja","Memeriksakan mata ke tenaga kesehatan mata","Menggosok mata lebih sering","Mengurangi minum air"],c:1,e:"Kebutuhan kacamata tiap orang berbeda. Pemeriksaan mata membantu mengetahui kondisi dan koreksi penglihatan yang tepat."}
+];
+let name="",index=0,score=0,correct=0,seconds=20,elapsed=0,tick=null,locked=false,cam=null,hands=null,handReady=false,lastPinch=false,hovered=-1, audioCtx=null;
+const $=id=>document.getElementById(id);
+function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));$(id).classList.add("active")}
+function sound(ok){try{audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();let o=audioCtx.createOscillator(),g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);o.type="sine";o.frequency.value=ok?740:190;g.gain.setValueAtTime(.12,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+.22);o.start();o.stop(audioCtx.currentTime+.23)}catch(e){}}
+function start(){name=$("studentName").value.trim()||"Pejuang Cerdas";index=0;score=0;correct=0;elapsed=0;$("playerLabel").textContent=name;$("score").textContent="0";show("game");render();startTimer()}
+function startTimer(){clearInterval(tick);tick=setInterval(()=>{if(!$("game").classList.contains("active"))return;elapsed++;seconds--; $("timer").textContent=seconds;if(seconds<=0)choose(-1)},1000)}
+function render(){
+ locked=false;hovered=-1;seconds=20;$("timer").textContent=seconds;
+ const item=quiz[index];$("levelLabel").textContent=`LEVEL ${item.level} / 5`;$("questionCount").textContent=`SOAL ${index+1} / 15`;
+ $("qmeta").textContent=`LEVEL ${item.level} · ${item.kind}`;$("questionText").textContent=item.q;
+ $("progressFill").style.width=`${index/quiz.length*100}%`;$("feedback").className="feedback";$("feedback").innerHTML="";
+ const root=$("answers");root.innerHTML="";
+ item.a.forEach((answer,i)=>{let b=document.createElement("button");b.className="answer";b.dataset.index=i;b.innerHTML=`<span class="letter">${"ABCD"[i]}</span><span>${answer}</span>`;b.addEventListener("click",()=>choose(i));b.addEventListener("mouseenter",()=>setHover(i));b.addEventListener("mouseleave",()=>setHover(-1));root.appendChild(b)});
+}
+function setHover(i){if(locked)return;hovered=i;document.querySelectorAll(".answer").forEach((b,n)=>b.classList.toggle("hovered",n===i))}
+function choose(i){
+ if(locked||!$("game").classList.contains("active"))return;locked=true;clearInterval(tick);
+ const item=quiz[index],ok=i===item.c;if(ok){correct++;score+=100+Math.max(0,seconds)*2;sound(true)}else sound(false);
+ $("score").textContent=score;
+ document.querySelectorAll(".answer").forEach((b,n)=>{b.disabled=true;if(n===item.c)b.classList.add("correct");if(n===i&&!ok)b.classList.add("wrong")});
+ const fb=$("feedback");fb.className="feedback show "+(ok?"good":"bad");
+ fb.innerHTML=`<strong>${ok?"✓ BENAR! Hebat!":"✕ BELUM TEPAT. Tetap semangat!"}</strong>${item.e}`;
+ $("progressFill").style.width=`${(index+1)/quiz.length*100}%`;
+ setTimeout(()=>{index++;if(index>=quiz.length)finish();else{render();startTimer()}},2200);
+}
+function finish(){clearInterval(tick);$("finalScore").textContent=score;$("correctCount").textContent=correct;$("timeUsed").textContent=elapsed;
+ let title=correct>=13?"LUAR BIASA, "+name.toUpperCase()+"!":correct>=9?"KERJA BAGUS, "+name.toUpperCase()+"!":"TETAP SEMANGAT, "+name.toUpperCase()+"!";
+ $("resultTitle").textContent=title;
+ $("resultMessage").textContent=correct>=13?"Kamu menguasai materi mata dengan sangat baik. Terus pertahankan rasa ingin tahumu!":correct>=9?"Kamu sudah berusaha dengan baik. Pelajari kembali penjelasan dan coba tantangan ini lagi!":"Setiap latihan membuatmu semakin pintar. Baca kembali materi tentang bagian dan cara menjaga kesehatan mata, lalu coba lagi!";
+ show("finish");$("progressFill").style.width="100%";
+}
+async function toggleCamera(){
+ if(cam){try{cam.stop()}catch(e){};cam=null;if($("inputVideo").srcObject){$("inputVideo").srcObject.getTracks().forEach(t=>t.stop());$("inputVideo").srcObject=null} $("camWrap").classList.remove("show");$("camDot").classList.remove("on");$("camStatus").textContent="Kamera nonaktif";$("cameraBtn").textContent="Aktifkan kamera";return}
+ if(!navigator.mediaDevices?.getUserMedia){$("camStatus").textContent="Browser tidak mendukung kamera";return}
+ try{
+  if(!window.Hands||!window.Camera)throw new Error("MediaPipe belum termuat. Periksa koneksi internet.");
+  hands=new Hands({locateFile:(file)=>`https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`});
+  hands.setOptions({maxNumHands:1,modelComplexity:1,minDetectionConfidence:.65,minTrackingConfidence:.6});
+  hands.onResults(onHandResults);
+  cam=new Camera($("inputVideo"),{onFrame:async()=>{if(hands)await hands.send({image:$("inputVideo")})},width:640,height:480});
+  await cam.start();$("camWrap").classList.add("show");$("camDot").classList.add("on");$("camStatus").textContent="Kamera aktif";$("cameraBtn").textContent="Matikan kamera";
+ }catch(err){cam=null;$("camStatus").textContent=err.message||"Izin kamera ditolak";$("camDot").classList.remove("on");}
+}
+function onHandResults(results){
+ if(!results.multiHandLandmarks||!results.multiHandLandmarks.length){setHover(-1);lastPinch=false;return}
+ const lm=results.multiHandLandmarks[0],tip=lm[8],thumb=lm[4];
+ const x=(1-tip.x)*window.innerWidth,y=tip.y*window.innerHeight;
+ const pinch=Math.hypot(tip.x-thumb.x,tip.y-thumb.y)<.055;
+ const target=document.elementFromPoint(x,y)?.closest(".answer");
+ const idx=target?Number(target.dataset.index):-1;setHover(idx);
+ if(pinch&&!lastPinch&&idx>=0)choose(idx);lastPinch=pinch;
+}
+$("startBtn").addEventListener("click",start);
+$("studentName").addEventListener("keydown",e=>{if(e.key==="Enter")start()});
+$("cameraBtn").addEventListener("click",toggleCamera);
+$("againBtn").addEventListener("click",()=>{show("home");$("studentName").value=name;clearInterval(tick);});
+window.addEventListener("beforeunload",()=>{clearInterval(tick);if(cam)cam.stop()});
+</script>
+</body>
+</html>
